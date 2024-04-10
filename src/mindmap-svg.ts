@@ -1,8 +1,9 @@
-export function createSVG(containerEl: HTMLElement, lineHeight: string): SVGElement {
+export function createSVG(containerEl: HTMLElement, height?: string): SVGElement {
+  height = height || 'height: 100%';
   removeExistingSVG();
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg') as unknown as SVGElement;
   svg.id = 'markmap';
-  svg.setAttr('style', 'height: 100%; width: 100%;');
+  svg.setAttr('style', 'width: 100%;' + height + "px;");
   
   containerEl.appendChild(svg);
   return svg;

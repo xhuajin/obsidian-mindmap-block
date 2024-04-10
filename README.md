@@ -42,6 +42,15 @@
 
 ![mindmap-block-vedio](https://github.com/xhuajin/obsidian-mindmap-block/assets/114134574/d45e43db-6681-43e9-a365-35b39bf1b3c7)
 
+自定义高度
+
+```mindmap
+---
+height: 300
+---
+...
+```
+
 ## Thanks
 
 - [obsidian-mind-map](https://github.com/lynchjames/obsidian-mind-map)

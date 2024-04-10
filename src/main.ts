@@ -14,20 +14,27 @@ export default class Mindmap extends Plugin {
     this.registerMarkdownCodeBlockProcessor(
       'mindmap', 
       async (source, el, ctx) => {
-
+        let height = undefined;
+        if (source.startsWith('---\n')) {
+          source = source.slice(4);
+          height = source.slice(0, source.indexOf('\n---'));
+        }
+        
         const transformer = new Transformer();
         const { root, features } = transformer.transform(source);
-        const svgEl = createSVG(el, '1.5em');
+        const svgEl = createSVG(el, height);
         const options = {
           nodeMinHeight: 16,
           pan: true
         };
+        
         const markmapSVG = Markmap.create(svgEl, options, root);
         markmapSVG.rescale(1);
         const s = d3.select(svgEl);
         const g = s.select('g');
-        console.log(g);
-        g.transition().duration(750).attr('transform', 'translate(7,70) scale(1)');
+        
+        const transform = height ? "translate(7," + parseFloat(height.slice(height.indexOf(':') + 1))/2 + ") scale(1)" : "translate(7,70) scale(1)";
+        g.transition().duration(750).attr('transform', transform);
       }
     );
   }
