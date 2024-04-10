@@ -1,5 +1,3 @@
-import * as d3 from 'd3';
-
 import { DEFAULT_SETTINGS, MindmapSettings } from './settings';
 
 import { Markmap } from 'markmap-view';
@@ -21,20 +19,19 @@ export default class Mindmap extends Plugin {
         }
         
         const transformer = new Transformer();
-        const { root, features } = transformer.transform(source);
+        const { root, features } = await transformer.transform(source);
+        
         const svgEl = createSVG(el, height);
         const options = {
           nodeMinHeight: 16,
           pan: true
         };
-        
-        const markmapSVG = Markmap.create(svgEl, options, root);
-        markmapSVG.rescale(1);
-        const s = d3.select(svgEl);
-        const g = s.select('g');
-        
-        const transform = height ? "translate(7," + parseFloat(height.slice(height.indexOf(':') + 1))/2 + ") scale(1)" : "translate(7,70) scale(1)";
-        g.transition().duration(750).attr('transform', transform);
+        try {
+          const markmapSVG = Markmap.create(svgEl, options, root);
+        } catch (error) {
+            console.error(error);
+        }
+        // markmapSVG.rescale(1);
       }
     );
   }
